@@ -1,0 +1,4 @@
+*.exe
+jni.h
+jni_md.h
+jvm.lib
