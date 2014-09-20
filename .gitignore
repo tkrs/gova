@@ -1,5 +1,7 @@
 *.class
 *.exe
+*.dll
+*.o
 *.log
 jni.h
 jni_md.h
