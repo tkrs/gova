@@ -41,7 +41,7 @@ int InitJVM() {
 }
 
 int Hello(char *name) {
-	jstring jname = (*env)->NewStringUTF(env, name);
+    jstring jname = (*env)->NewStringUTF(env, name);
 
     jclass cls = (*env)->FindClass(env, "Hello");
     if (cls == 0) {
