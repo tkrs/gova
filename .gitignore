@@ -1,4 +1,6 @@
+*.class
 *.exe
+*.log
 jni.h
 jni_md.h
 jvm.lib
