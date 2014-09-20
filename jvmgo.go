@@ -1,8 +1,8 @@
 package main
-
-// #cgo CFLAGS: -I.
-// #cgo LDFLAGS: -L. -ljvm
 /*
+#cgo CFLAGS: -I.
+#cgo LDFLAGS: -L. -ljvm
+
 #include<jni.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -14,29 +14,29 @@ int CallDestroyJavaVM();
 int InitJVM();
 
 int InitJVM() {
-	int ret;
-	JavaVMInitArgs vm_args;
+    int ret;
+    JavaVMInitArgs vm_args;
     vm_args.version = JNI_VERSION_1_8;
     JNI_GetDefaultJavaVMInitArgs(&vm_args);
-	if (ret != JNI_OK) {
-		printf("vm init args error:%d\n", ret);
-		return ret;
-	}
+    if (ret != JNI_OK) {
+        printf("vm init args error:%d\n", ret);
+        return ret;
+    }
 
-	JavaVMOption options[3];
-	options[0].optionString = "-Djava.compiler=NONE";
-	//options[1].optionString = "-Djava.library.path=C:\\Program Files\\Java\\jdk1.8.0_05\\lib";
-	options[1].optionString = "-Djava.class.path=.";
-	options[2].optionString = "-verbose:jni";
+    JavaVMOption options[3];
+    options[0].optionString = "-Djava.compiler=NONE";
+    //options[1].optionString = "-Djava.library.path=C:\\Program Files\\Java\\jdk1.8.0_05\\lib";
+    options[1].optionString = "-Djava.class.path=.";
+    options[2].optionString = "-verbose:jni";
 
- 	vm_args.nOptions = 1;
-	vm_args.options = options;
+    vm_args.nOptions = 1;
+    vm_args.options = options;
 
     ret = JNI_CreateJavaVM(&jvm, (void **)&env, &vm_args);
-	if (ret != JNI_OK) {
-		printf("create vm error:%d\n", ret);
-		return ret;
-	}
+    if (ret != JNI_OK) {
+        printf("create vm error:%d\n", ret);
+        return ret;
+    }
 
 }
 
