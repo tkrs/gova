@@ -1,4 +1,5 @@
 package main
+
 /*
 #cgo CFLAGS: -I.
 #cgo LDFLAGS: -L. -ljvm
@@ -23,11 +24,11 @@ int InitJVM() {
         return ret;
     }
 
-    JavaVMOption options[3];
+    JavaVMOption options[2];
     options[0].optionString = "-Djava.compiler=NONE";
     //options[1].optionString = "-Djava.library.path=C:\\Program Files\\Java\\jdk1.8.0_05\\lib";
     options[1].optionString = "-Djava.class.path=.";
-    options[2].optionString = "-verbose:jni";
+    //options[2].optionString = "-verbose:jni";
 
     vm_args.nOptions = 1;
     vm_args.options = options;
@@ -54,6 +55,7 @@ int Hello(char *name) {
         return -1;
     }
     (*env)->CallStaticVoidMethod(env, cls, mid, jname);
+    return 0;
 }
 
 int CallDestroyJavaVM() {
@@ -74,8 +76,13 @@ func NewJavaVM() *JNI {
 	return new(JNI)
 }
 
-func (*JNI) Hello(name *C.char) {
-	C.Hello(name)
+func (*JNI) Hello(name string) {
+	ret, err := C.Hello(C.CString(name))
+	if err != nil {
+		println(err)
+		panic(err)
+	}
+	println(ret)
 }
 
 func (j *JNI) DestroyJavaVM() {
@@ -89,5 +96,5 @@ func (j *JNI) DestroyJavaVM() {
 func main() {
 	jvm := NewJavaVM()
 	defer jvm.DestroyJavaVM()
-	jvm.Hello(C.CString("桃白白"))
+	jvm.Hello("桃白白")
 }
